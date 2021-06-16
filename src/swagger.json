@@ -1,0 +1,125 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SOLID Challenge Documentation",
+    "description": "API com conceitos SOLID",
+    "version": "1.0.0",
+    "contact": {
+      "email": "filipecapella@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create user",
+        "description": "Create new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "User Name",
+                  "email": "user@email.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "List users",
+        "description": "List all users if you are admin user",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "user_id",
+            "required": "true",
+            "schema": {
+              "type": "string"
+            },
+            "description": "User id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success!"
+          },
+          "400": {
+            "description": "Invalid user or user has not admin permission"
+          }
+        }
+      }
+    },
+    "/:user_id": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Show user",
+        "description": "Show user profile",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": "true",
+            "schema": {
+              "type": "string"
+            },
+            "description": "User id"
+          }
+        ],
+        "response": {
+          "200": {
+            "description": "Success!"
+          },
+          "400": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/:user_id/admin": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Turn user into admin",
+        "description": "Turn user into admin",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": "true",
+            "schema": {
+              "type": "string"
+            },
+            "description": "User id"
+          }
+        ],
+        "response": {
+          "201": {
+            "description": "User is now admin"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  }
+}
